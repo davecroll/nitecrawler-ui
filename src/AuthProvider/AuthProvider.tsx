@@ -9,6 +9,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     createAuth0Client({
       domain: "dev-cfu-0oq8.auth0.com",
       client_id: "HZYe4PgXY7AmFc532MTcDjfGAYl0ZY43",
+      redirect_uri: "https://nitecrawler-ui.azurewebsites.net",
+      // redirect_uri: "http://localhost:3000",
     }).then((auth0) => {
       setAuth0(auth0);
 
@@ -27,14 +29,12 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const login = () => {
-    auth0?.loginWithRedirect({
-      redirect_uri: "http://localhost:3000",
-    });
+    auth0?.loginWithRedirect();
   };
 
   const logout = () => {
     auth0?.logout({
-      returnTo: "http://localhost:3000",
+      returnTo: "https://nitecrawler-ui.azurewebsites.net/",
     });
   };
 
