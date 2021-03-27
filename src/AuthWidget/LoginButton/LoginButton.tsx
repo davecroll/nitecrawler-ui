@@ -1,5 +1,5 @@
 import { PrimaryButton } from "@fluentui/react";
-import { useAuthContext } from "../AuthProvider/AuthProvider";
+import { useAuthContext } from "../../AuthProvider/AuthProvider";
 
 export const LoginButton: React.FC = () => {
   const { login } = useAuthContext();
