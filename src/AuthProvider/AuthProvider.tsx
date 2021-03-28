@@ -46,7 +46,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 };
 
 const AuthContext = React.createContext<AuthContextValues>({
-  login: undefined,
   user: null,
 });
 
