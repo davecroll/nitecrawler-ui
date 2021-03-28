@@ -44,9 +44,17 @@ export const PublicationList: React.FC = () => {
     { key: "column3", name: "Sector", fieldName: "sector", minWidth: 100 },
     {
       key: "column4",
-      name: "SubSector",
-      fieldName: "subSector",
+      name: "Subsector",
+      fieldName: "subsector",
       minWidth: 100,
+    },
+    {
+      key: "column4",
+      name: "Access",
+      minWidth: 50,
+      onRender: (item: IPublication) => (
+        <>{item.canUserAccess ? "yes" : "no"}</>
+      ),
     },
   ];
 
