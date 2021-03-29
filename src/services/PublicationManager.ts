@@ -1,6 +1,6 @@
 class PublicationManager {
   getPublications = async (): Promise<IPublication[]> => {
-    const response = await fetch('http://localhost/publications');
+    const response = await fetch('https://nitecrawler-api.azurewebsites.net/publications');
     const json = await response.json();
     const data = json.data;
     
