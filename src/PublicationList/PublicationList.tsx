@@ -5,6 +5,7 @@ import {
   TooltipHost,
 } from "@fluentui/react";
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../AuthProvider/AuthProvider";
 import {
   IPublication,
   publicationManager,
@@ -12,12 +13,25 @@ import {
 
 export const PublicationList: React.FC = () => {
   const [publications, setPublications] = useState<IPublication[]>([]);
+  const { getToken } = useAuthContext();
 
   useEffect(() => {
-    publicationManager.getPublications().then((pubs) => {
-      setPublications(pubs);
-    });
-  }, []);
+    const func = async () => {
+      let token;
+
+      if (getToken) {
+        token = await getToken();
+      }
+
+      const publications = await publicationManager.getPublications(
+        token || undefined
+      );
+
+      setPublications(publications);
+    };
+
+    func();
+  }, [getToken]);
 
   const iconStyles = {
     verticalAlign: "middle",
@@ -53,7 +67,7 @@ export const PublicationList: React.FC = () => {
       name: "Access",
       minWidth: 50,
       onRender: (item: IPublication) => (
-        <>{item.canUserAccess ? "yes" : "no"}</>
+        <>{item.canUserAccess == null ? "???" : String(item.canUserAccess)}</>
       ),
     },
   ];

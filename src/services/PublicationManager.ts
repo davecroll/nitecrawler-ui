@@ -1,6 +1,13 @@
 class PublicationManager {
-  getPublications = async (): Promise<IPublication[]> => {
-    const response = await fetch('https://nitecrawler-api.azurewebsites.net/publications');
+  getPublications = async (token?: string): Promise<IPublication[]> => {
+    const requestInit: RequestInit = {};
+    if (!!token) {
+      requestInit.headers = {
+        'Authorization': token
+      }
+    }
+
+    const response = await fetch('https://nitecrawler-api.azurewebsites.net/publications', requestInit);
     const json = await response.json();
     const data = json.data;
     

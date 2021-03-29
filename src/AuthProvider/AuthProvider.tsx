@@ -11,6 +11,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       client_id: "HZYe4PgXY7AmFc532MTcDjfGAYl0ZY43",
       redirect_uri: "https://nitecrawler-ui.azurewebsites.net",
       // redirect_uri: "http://localhost:3000",
+      audience: "https://croll.dev/api",
     }).then((auth0) => {
       setAuth0(auth0);
 
@@ -38,8 +39,20 @@ export const AuthProvider: React.FC = ({ children }) => {
     });
   };
 
+  const getToken = async () => {
+    let token = null;
+
+    try {
+      token = await auth0?.getTokenSilently();
+    } catch (e) {
+      // do nothing
+    }
+
+    return token;
+  };
+
   return (
-    <AuthContext.Provider value={{ login, logout, user }}>
+    <AuthContext.Provider value={{ login, logout, getToken, user }}>
       {children}
     </AuthContext.Provider>
   );
@@ -52,6 +65,7 @@ const AuthContext = React.createContext<AuthContextValues>({
 type AuthContextValues = {
   login?(): void;
   logout?(): void;
+  getToken?(): Promise<string | null>;
   user: User | null;
 };
 
